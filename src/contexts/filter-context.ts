@@ -4,10 +4,17 @@ import { FilterContextState } from "@/models/FilterState";
 const defaultFilterContextValue: FilterContextState = {
   filterState: {
     jobType: [],
-    experience: "",
-    salary: "",
+    experience: {
+      min: "",
+      max: "",
+    },
+    salary: {
+      min: "",
+      max: "",
+    },
     domain: [],
   },
+  appliedFilterCount: 0,
   dispatch: () => {
     throw new Error("Dispatch must be used within FilterProvider");
   },

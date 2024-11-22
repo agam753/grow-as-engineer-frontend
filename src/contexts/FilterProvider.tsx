@@ -7,11 +7,25 @@ import {
 } from "@/models/FilterState";
 import { FilterContext } from "./filter-context";
 
+const min_exp =
+  process.env.NEXT_PUBLIC_EXP_FILTER_VALUES?.split(",").at(0) || "0";
+const max_exp =
+  process.env.NEXT_PUBLIC_EXP_FILTER_VALUES?.split(",").at(-1) || "10";
+const min_salary =
+  process.env.NEXT_PUBLIC_SALARY_FILTER_VALUES?.split(",").at(0) || "0";
+const max_salary =
+  process.env.NEXT_PUBLIC_SALARY_FILTER_VALUES?.split(",").at(-1) || "50";
 // initial filter state
 const initialFilterState: FilterState = {
   jobType: [],
-  experience: "",
-  salary: "",
+  experience: {
+    min: min_exp,
+    max: max_exp,
+  },
+  salary: {
+    min: min_salary,
+    max: max_salary,
+  },
   domain: [],
 };
 
@@ -23,15 +37,40 @@ const filterReducer = (
   switch (action.type) {
     case "SET_JOBTYPE":
       return { ...state, jobType: action.payload };
-    case "SET_EXPERIENCE":
-      return { ...state, experience: action.payload };
-    case "SET_SALARY":
-      return { ...state, salary: action.payload };
+    case "SET_MIN_EXP":
+      return {
+        ...state,
+        experience: { ...state.experience, min: action.payload },
+      };
+    case "SET_MAX_EXP":
+      return {
+        ...state,
+        experience: { ...state.experience, max: action.payload },
+      };
+    case "SET_MIN_SALARY":
+      return { ...state, salary: { ...state.salary, min: action.payload } };
+    case "SET_MAX_SALARY":
+      return { ...state, salary: { ...state.salary, max: action.payload } };
     case "SET_DOMAIN":
       return { ...state, domain: action.payload };
     case "RESET_FILTERS":
-      return { jobType: [], experience: "", salary: "", domain: [] };
+      return initialFilterState;
   }
+};
+
+const countAppliedFilters = (filterState: FilterState): number => {
+  let count = filterState.jobType.length + filterState.domain.length;
+  if (
+    filterState.experience.min !== min_exp ||
+    filterState.experience.max !== max_exp
+  )
+    count++;
+  if (
+    filterState.salary.min !== min_salary ||
+    filterState.salary.max != max_salary
+  )
+    count++;
+  return count;
 };
 
 const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -39,8 +78,11 @@ const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [filterState, dispatch] = useReducer(filterReducer, initialFilterState);
 
+  const appliedFilterCount = countAppliedFilters(filterState);
   return (
-    <FilterContext.Provider value={{ filterState, dispatch }}>
+    <FilterContext.Provider
+      value={{ filterState, dispatch, appliedFilterCount }}
+    >
       {children}
     </FilterContext.Provider>
   );

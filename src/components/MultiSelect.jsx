@@ -20,7 +20,7 @@ const selectStyle = {
     border: "2px solid hsl(var(--accent))",
     borderRadius: 4,
     padding: "2px 0px",
-    backgroundColor: "transparent",
+    backgroundColor: "hsl(var(--background))",
     color: "hsl(var(--foreground))",
     boxShadow:
       "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
@@ -40,7 +40,7 @@ const selectStyle = {
   }),
   menu: (provided) => ({
     ...provided,
-    backgroundColor: "transparent",
+    backgroundColor: "hsl(var(--background))",
     border: "2px solid hsl(var(--accent))",
     borderRadius: 4,
   }),
@@ -52,9 +52,10 @@ const selectStyle = {
     ...provided,
     cursor: "pointer",
     fontSize: "14px",
-    backgroundColor: state.isFocused ? "hsl(var(--accent))" : "transparent",
+    backgroundColor: state.isFocused
+      ? "hsl(var(--accent))"
+      : "hsl(var(--background))",
     color: "hsl(var(--foreground))",
-    borderTop: "2px solid hsl(var(--accent))",
     transition: "background-color 0.2s ease",
     ":active": {
       backgroundColor: "hsl(var(--accent))",

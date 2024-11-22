@@ -5,7 +5,7 @@ import { FilterProvider } from "@/contexts/FilterProvider";
 export default function Home() {
   return (
     <main>
-      <div className="flex">
+      <div className="flex flex-col-reverse md:flex-row mx-4">
         <JobsList />
         <FilterProvider>
           <JobFilters />

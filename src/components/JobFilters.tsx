@@ -1,60 +1,131 @@
 "use client";
-import { Button } from "./ui/button";
-import { Filter, Trash2 } from "lucide-react";
 import ToggleButton from "./ToggleButton";
-import CheckboxList from "./CheckboxList";
 import MultiSelect from "./MultiSelect";
 import { useFilter } from "@/contexts/FilterProvider";
-import { FilterState } from "@/models/FilterState";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Trash2, ListFilter } from "lucide-react";
+import MinMaxFilter from "./MinMaxFilter";
+
 const JobFilters = () => {
-  const { filterState, dispatch } = useFilter();
+  const { filterState, dispatch, appliedFilterCount } = useFilter();
   console.log(filterState);
-  let appliedFilterCount = 0;
-  for (const key in filterState) {
-    if (filterState[key as keyof FilterState].length > 0) appliedFilterCount++;
-  }
+
   return (
-    <div className="w-1/4 ml-4 mr-4 p-4 rounded-md shadow-custom border max-h-dvh">
-      <div className="flex justify-between mb-4">
-        <div className="flex align-middle">
-          <Filter className="h-full" />
-          <h2 className="text-2xl ml-1.5">
-            Filters{" "}
-            <span className="text-xl font-semibold text-mygreen">
-              {appliedFilterCount > 0 ? `(${appliedFilterCount})` : ""}
-            </span>
-          </h2>
+    <>
+      {/* Mobile View */}
+      <div className="block md:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">
+              <ListFilter size="small" className="mr-2" />
+              Filters&nbsp;
+              <span className="text-md text-mygreen">
+                {appliedFilterCount > 0 ? `(${appliedFilterCount})` : ""}
+              </span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle className="mb-10">
+                Filters{" "}
+                <span className="text-md text-mygreen">
+                  {appliedFilterCount > 0 ? `(${appliedFilterCount})` : ""}
+                </span>
+              </SheetTitle>
+            </SheetHeader>
+            <div className="flex justify-center">
+              <Button
+                variant={"destructive"}
+                className="capitalize"
+                onClick={() => dispatch({ type: "RESET_FILTERS" })}
+              >
+                {" "}
+                Clear All Filters
+                <Trash2 size="small" className="ml-3" />
+              </Button>
+            </div>
+            <div className="my-6">
+              <h2 className="text-md font-bold">Job Type</h2>
+              <ToggleButton name="Full Time" value="full-time" />
+              <ToggleButton name="Internship" value="intern" />
+            </div>
+            {/* Experience Filter List */}
+            <MinMaxFilter
+              heading="experience"
+              type="EXP"
+              filterValues={
+                process.env.NEXT_PUBLIC_EXP_FILTER_VALUES?.split(",") || []
+              }
+            />
+            {/* Salary Filter List */}
+            <MinMaxFilter
+              type="SALARY"
+              heading="salary (LPA)"
+              filterValues={
+                process.env.NEXT_PUBLIC_SALARY_FILTER_VALUES?.split(",") || []
+              }
+            />
+            <div className="my-6">
+              <h2 className="text-md font-bold my-2">Domain</h2>
+              <MultiSelect />
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      {/* Desktop View */}
+      <div className="hidden md:block w-1/4 p-4 rounded-md shadow-custom border max-h-max">
+        <div className="flex justify-between mb-4">
+          <div className="flex align-middle">
+            <h2 className="text-2xl ml-1.5">
+              Filters{" "}
+              <span className="text-xl font-semibold text-mygreen">
+                {appliedFilterCount > 0 ? `(${appliedFilterCount})` : ""}
+              </span>
+            </h2>
+          </div>
+          <Button
+            variant={"ghost"}
+            className="capitalize text-destructive hover:text-destructive"
+            onClick={() => dispatch({ type: "RESET_FILTERS" })}
+          >
+            <Trash2 size="small" />
+          </Button>
         </div>
-        <Button
-          variant={"ghost"}
-          className="capitalize text-destructive hover:text-destructive"
-          onClick={() => dispatch({ type: "RESET_FILTERS" })}
-        >
-          <Trash2 size="small" />
-        </Button>
+        <div className="my-6">
+          <h2 className="text-md font-bold">Job Type</h2>
+          <ToggleButton name="Full Time" value="full-time" />
+          <ToggleButton name="Internship" value="intern" />
+        </div>
+        {/* Experience Filter List */}
+        <MinMaxFilter
+          heading="experience"
+          type="EXP"
+          filterValues={
+            process.env.NEXT_PUBLIC_EXP_FILTER_VALUES?.split(",") || []
+          }
+        />
+        {/* Salary Filter List */}
+        <MinMaxFilter
+          type="SALARY"
+          heading="salary (LPA)"
+          filterValues={
+            process.env.NEXT_PUBLIC_SALARY_FILTER_VALUES?.split(",") || []
+          }
+        />
+        <div className="my-6">
+          <h2 className="text-md font-bold my-2">Domain</h2>
+          <MultiSelect />
+        </div>
       </div>
-      <div className="my-6">
-        <h2 className="text-md font-bold">Job Type</h2>
-        <ToggleButton name="Full Time" value="full-time" />
-        <ToggleButton name="Internship" value="intern" />
-      </div>
-
-      {/* Experience Filter List */}
-      <CheckboxList
-        filterValues={["0-1 Yr", "2-4 Yr", "5-10 Yr", "10+ Yr"]}
-        heading="experience"
-      />
-
-      {/* Salary Filter List */}
-      <CheckboxList
-        filterValues={["0-5 LPA", "6-10 LPA", "10-20 LPA", "20+ LPA"]}
-        heading="salary"
-      />
-      <div className="my-6">
-        <h2 className="text-md font-bold my-2">Domain</h2>
-        <MultiSelect />
-      </div>
-    </div>
+    </>
   );
 };
 

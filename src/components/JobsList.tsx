@@ -56,7 +56,7 @@ const initialJobs: Array<Job> = [
 const JobsList = () => {
   const [jobs, setJobs] = useState<Array<Job>>(initialJobs);
   return (
-    <div className="w-3/4">
+    <div className="md:w-3/4">
       {jobs.map((job, index) => (
         <JobCard key={job.jobId + index} job={job} />
       ))}
