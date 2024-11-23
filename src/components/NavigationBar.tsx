@@ -4,20 +4,77 @@ import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
 import NavSearchBar from "./NavSearchBar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "./ui/dropdown-menu";
+import { MenuIcon, SearchIcon, XIcon } from "lucide-react";
+import { useState } from "react";
 
 const NavigationBar = () => {
-  const navIconCss = "text-lg";
+  const navIconCss = "text-center w-full md:w-auto md:font-semibold";
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   return (
-    <nav className="flex justify-between flex-col  p-4 pl-8 pr-8 mb-6 gap-2 border-b md:flex-row">
-      <Button variant={"ghost"} className="text-xl font-bold">
-        <Link href={"/"}>Grow As Engineer</Link>
-      </Button>
-
-      <div className="w-full">
+    <nav className="flex justify-between align-middle p-4 mb-6 gap-2 border-b">
+      {showSearch ? (
         <NavSearchBar />
+      ) : (
+        <Button variant={"ghost"} className="md:text-lg font-bold px-2 md:px-4">
+          <Link href={"/"}>Grow As Engineer</Link>
+        </Button>
+      )}
+      <div className="flex items-center gap-4 md:hidden">
+        {showSearch ? (
+          <XIcon
+            className="cursor-pointer"
+            onClick={() => setShowSearch(false)}
+          />
+        ) : (
+          <SearchIcon
+            className="cursor-pointer"
+            onClick={() => setShowSearch(true)}
+          />
+        )}
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <MenuIcon />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Link href="/remote-jobs">
+              <DropdownMenuItem>
+                <Button className={navIconCss} variant={"ghost"}>
+                  Remote Jobs
+                </Button>
+              </DropdownMenuItem>
+            </Link>
+            <Link href="/blogs">
+              <DropdownMenuItem asChild>
+                <Button className={navIconCss} variant={"ghost"}>
+                  Blogs
+                </Button>
+              </DropdownMenuItem>
+            </Link>
+            <Link href="/about">
+              <DropdownMenuItem>
+                <Button className={navIconCss} variant={"ghost"}>
+                  About
+                </Button>
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem>
+              <ThemeToggle />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
-      <ul className="flex flex-row flex-wrap md:flex-nowrap justify-evenly w-full">
+      {/* Desktop view */}
+      <div className="hidden md:block w-2/4">
+        <NavSearchBar />
+      </div>
+      <ul className="hidden md:flex">
         <li>
           <Button className={navIconCss} asChild variant={"ghost"}>
             <Link href="/remote-jobs">Remote Jobs</Link>

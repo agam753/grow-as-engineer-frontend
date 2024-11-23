@@ -23,11 +23,12 @@ const JobFilters = () => {
       <div className="block md:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline">
+            <Button variant="outline" className="text-mygreen">
               <ListFilter size="small" className="mr-2" />
-              Filters&nbsp;
               <span className="text-md text-mygreen">
-                {appliedFilterCount > 0 ? `(${appliedFilterCount})` : ""}
+                {appliedFilterCount > 0
+                  ? `Filters (${appliedFilterCount})`
+                  : "Apply Filters  "}
               </span>
             </Button>
           </SheetTrigger>
@@ -40,17 +41,19 @@ const JobFilters = () => {
                 </span>
               </SheetTitle>
             </SheetHeader>
-            <div className="flex justify-center">
-              <Button
-                variant={"destructive"}
-                className="capitalize"
-                onClick={() => dispatch({ type: "RESET_FILTERS" })}
-              >
-                {" "}
-                Clear All Filters
-                <Trash2 size="small" className="ml-3" />
-              </Button>
-            </div>
+            {appliedFilterCount > 0 && (
+              <div className="flex justify-center">
+                <Button
+                  variant={"destructive"}
+                  className="capitalize"
+                  onClick={() => dispatch({ type: "RESET_FILTERS" })}
+                >
+                  {" "}
+                  Clear All
+                  <Trash2 size="small" className="ml-2" />
+                </Button>
+              </div>
+            )}
             <div className="my-6">
               <h2 className="text-md font-bold">Job Type</h2>
               <ToggleButton name="Full Time" value="full-time" />

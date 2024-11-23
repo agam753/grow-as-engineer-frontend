@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useReducer, useEffect } from "react";
 import {
   FilterAction,
   FilterContextState,
@@ -76,7 +76,21 @@ const countAppliedFilters = (filterState: FilterState): number => {
 const FilterProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [filterState, dispatch] = useReducer(filterReducer, initialFilterState);
+  const [filterState, dispatch] = useReducer(
+    filterReducer,
+    initialFilterState,
+    (initial) => {
+      if (typeof window !== "undefined") {
+        const savedState = localStorage.getItem("filterState");
+        return savedState ? JSON.parse(savedState) : initial;
+      }
+      return initial;
+    }
+  );
+
+  useEffect(() => {
+    localStorage.setItem("filterState", JSON.stringify(filterState));
+  }, [filterState]);
 
   const appliedFilterCount = countAppliedFilters(filterState);
   return (

@@ -27,10 +27,10 @@ const JobCard = ({
   const router = useRouter();
   return (
     <div
-      className="border-b-2 p-6 flex cursor-pointer"
+      className="border-b-2 py-6 md:p-6 flex flex-col md:flex-row cursor-pointer"
       onClick={() => router.push(`/job/${jobId}`)}
     >
-      <div className="w-1/4">
+      <div className="md:w-1/4">
         <Image
           className="rounded-md w-full h-full"
           src={`${companyLogo}`}
@@ -40,8 +40,8 @@ const JobCard = ({
           layout="responsive"
         />
       </div>
-      <div className="w-3/4 ml-6">
-        <h2 className="font-bold capitalize text-2xl text-justify">
+      <div className="md:w-3/4 md:ml-6 mt-2 md:mt-0">
+        <h2 className="font-bold capitalize text-lg md:text-2xl text-justify">
           {`${title} | ${location}`}
         </h2>
         <div className="capitalize text-xs my-3">
@@ -50,7 +50,7 @@ const JobCard = ({
             {new Date(postingDate).toDateString()}
           </span>
         </div>
-        <div className="flex w-1/2 justify-between text-xs pt-4 text-center">
+        <div className="flex md:w-1/2 justify-between text-xs pt-4 text-center">
           <StyleContainer showTitle={true} title="Domain" value={domain} />
           <StyleContainer showTitle={true} title="Job Type" value={jobType} />
           <StyleContainer

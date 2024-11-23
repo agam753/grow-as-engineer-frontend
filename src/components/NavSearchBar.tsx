@@ -3,7 +3,7 @@ import { Input } from "./ui/input";
 import { useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 
-const data: Array<string> = ["abc", "abd", "def", "ghi"];
+const data: Array<string> = ["abc", "abd", "def", "ghi", "abc", "abc", "abc"];
 
 const NavSearchBar = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -16,7 +16,7 @@ const NavSearchBar = () => {
     setSearchResult(newData);
   };
   return (
-    <div className="relative">
+    <div className="relative w-3/4 md:w-full">
       <Input
         type="text"
         value={searchStr}
