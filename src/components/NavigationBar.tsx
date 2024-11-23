@@ -49,10 +49,10 @@ const NavigationBar = () => {
                 </Button>
               </DropdownMenuItem>
             </Link>
-            <Link href="/blogs">
+            <Link href="/contact">
               <DropdownMenuItem asChild>
                 <Button className={navIconCss} variant={"ghost"}>
-                  Blogs
+                  Contact Us
                 </Button>
               </DropdownMenuItem>
             </Link>
@@ -82,7 +82,7 @@ const NavigationBar = () => {
         </li>
         <li>
           <Button className={navIconCss} asChild variant={"ghost"}>
-            <Link href="/blogs">Blogs</Link>
+            <Link href="/contact">Contact Us</Link>
           </Button>
         </li>
         <li>

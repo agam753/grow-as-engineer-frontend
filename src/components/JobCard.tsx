@@ -50,7 +50,7 @@ const JobCard = ({
             {new Date(postingDate).toDateString()}
           </span>
         </div>
-        <div className="flex md:w-1/2 justify-between text-xs pt-4 text-center">
+        <div className="flex md:w-1/2 justify-between text-xs pt-4 text-center flex-wrap gap-4">
           <StyleContainer showTitle={true} title="Domain" value={domain} />
           <StyleContainer showTitle={true} title="Job Type" value={jobType} />
           <StyleContainer
