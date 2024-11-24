@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import CardContentCarousel from "./cardContentCarousel/cardContentCarousel";
 import {
   Carousel,
   CarouselContent,
@@ -11,32 +12,44 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import "@/components/shared/carousel/carousel.css";
+import { CompanyJobs } from "@/interfaces/carousel";
 
-export function SharedCarousel({ delay = 2000 }: { delay?: number }) {
+export function SharedCarousel({
+  delay = 2000,
+  data = [],
+}: {
+  delay?: number;
+  data: CompanyJobs[];
+}) {
   return (
     <Carousel
       className="mt-[2rem]"
       opts={{ loop: true }}
       plugins={[Autoplay({ delay: delay })]}
     >
-      <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem
-            key={index}
-            className="flex justify-center items-center"
-          >
-            <div className="p-1 w-[1200px]">
-              <Card className="h-[400px]">
-                <CardContent className="flex items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
+      <CarouselContent className="carouselContent">
+        {data.map((companyData) => {
+          return (
+            <CarouselItem
+              key={companyData.company}
+              className="flex justify-center items-center carouselItem"
+            >
+              <div className="p-1 w-[1200px]">
+                <Card className="h-[400px]">
+                  <CardContentCarousel
+                    className="flex items-center justify-evenly flex-col h-full "
+                    openings={companyData.openings}
+                    company={companyData.company}
+                    companyImg={companyData.companyImg}
+                  />
+                </Card>
+              </div>
+            </CarouselItem>
+          );
+        })}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-[2rem] top-1/2 transform -translate-y-1/2 z-10" />
-      <CarouselNext className="absolute right-[2rem] top-1/2 transform -translate-y-1/2 z-10" />
+      <CarouselPrevious className="absolute left-[2rem] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer" />
+      <CarouselNext className="absolute right-[2rem] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer" />
     </Carousel>
   );
 }
