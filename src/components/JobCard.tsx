@@ -27,7 +27,7 @@ const JobCard = ({
   const router = useRouter();
   return (
     <div
-      className="border-b-2 py-6 md:p-6 flex flex-col md:flex-row cursor-pointer"
+      className="border-2 py-6 md:p-6 flex flex-col md:flex-row cursor-pointer"
       onClick={() => router.push(`/job/${jobId}`)}
     >
       <div className="md:w-1/4">

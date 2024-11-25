@@ -14,7 +14,7 @@ const JobFilters = () => {
   return (
     <>
       {/* Mobile View */}
-      <div className="block md:hidden flex justify-end">
+      <div className="block md:hidden">
         <Sheet>
           <SheetTrigger asChild>
             <Button
