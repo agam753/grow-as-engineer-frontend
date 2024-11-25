@@ -28,7 +28,13 @@ export function SharedCarousel({
           loop: true,
           align: "start",
         }}
-        // plugins={[Autoplay({ delay: delay })]}
+        plugins={[
+          Autoplay({
+            delay: delay,
+            stopOnMouseEnter: true,
+            stopOnInteraction: false,
+          }),
+        ]}
         className="w-full"
       >
         <CarouselContent className="-ml-2 md:-ml-4">
