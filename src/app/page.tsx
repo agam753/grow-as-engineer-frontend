@@ -3,6 +3,7 @@ import JobsList from "@/components/JobsList";
 import { SharedCarousel } from "@/components/shared/carousel/carousel";
 import { FilterProvider } from "@/contexts/FilterProvider";
 import { CompanyJobs } from "@/interfaces/carousel";
+import { Footer } from "@/components/footer/footer";
 
 const carouselArray: CompanyJobs[] = [
   {
@@ -299,7 +300,7 @@ const carouselArray: CompanyJobs[] = [
 
 export default function Home() {
   return (
-    <main>
+    <main className="mainContainer flex flex-col gap-4">
       <SharedCarousel data={carouselArray} />
       <div className="flex flex-col-reverse md:flex-row mx-4 gap-4">
         <JobsList />
@@ -307,6 +308,7 @@ export default function Home() {
           <JobFilters />
         </FilterProvider>
       </div>
+      <Footer />
     </main>
   );
 }
