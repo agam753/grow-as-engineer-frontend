@@ -21,9 +21,10 @@ function CardContentCarousel({
     >
       <h1 className="text-xl font-bold md:text-3xl pt-2 pb-2x">{company}</h1>
       <div className="flex flex-col w-full justify-evenly h-full gap-2 overflow-y-scroll p-3">
-        {openings.map((opening) => {
+        {openings.map((opening, idx) => {
           return (
             <CompanyRecentOpeningCard
+              key={idx}
               jobDetail={opening}
               company={company}
               cardContainerClass="border-none"
