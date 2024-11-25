@@ -25,7 +25,8 @@ export function SharedCarousel({
     <Carousel
       className="mt-[2rem]"
       opts={{ loop: true }}
-      plugins={[Autoplay({ delay: delay })]}
+      //TODO: on hover carousel should not autoPlay
+      // plugins={[Autoplay({ delay: delay })]}
     >
       <CarouselContent className="carouselContent">
         {data.map((companyData) => {
@@ -48,8 +49,8 @@ export function SharedCarousel({
           );
         })}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-[2rem] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer" />
-      <CarouselNext className="absolute right-[2rem] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer" />
+      <CarouselPrevious className="absolute left-[2rem] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer opacity-45 md:opacity-100" />
+      <CarouselNext className="absolute right-[2rem] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer opacity-45 md:opacity-100" />
     </Carousel>
   );
 }
