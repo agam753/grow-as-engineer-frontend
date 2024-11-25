@@ -3,7 +3,7 @@ import JobSection from "@/components/JobSection";
 
 const PrivacyPage = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-[90vh]">
       <div className="flex-grow mx-6 md:mx-20">
         <JobSection
           title="Privacy Policy"

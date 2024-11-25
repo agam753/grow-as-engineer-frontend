@@ -3,7 +3,7 @@ import JobSection from "@/components/JobSection";
 
 const ContactPage = () => {
   return (
-    <div className="flex flex-col min-h-lvh">
+    <div className="flex flex-col min-h-[90vh]">
       <div className="flex-grow mx-6 md:mx-20">
         <JobSection
           title="Contact Us"
