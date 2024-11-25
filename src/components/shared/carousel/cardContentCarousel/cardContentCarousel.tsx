@@ -27,7 +27,7 @@ function CardContentCarousel({
       <h1 className="relative text-xl font-bold md:text-3xl pt-2 pb-2">
         {company}
       </h1>
-      <div className="relative flex flex-col w-full justify-evenly h-full gap-2 overflow-y-scroll p-3">
+      <div className="relative flex flex-col w-full justify-evenly h-full gap-2 overflow-y-scroll p-3 mb-2">
         {openings.map((opening, idx) => {
           return (
             <CompanyRecentOpeningCard
