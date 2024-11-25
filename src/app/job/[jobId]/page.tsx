@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import JobSection from "@/components/JobSection";
 import StyleContainer from "@/components/StyleContainer";
 import { Button } from "@/components/ui/button";
@@ -25,45 +26,54 @@ const jobDetails = {
 const JobPage = async ({ params }: { params: Promise<{ jobId: string }> }) => {
   const jobId = (await params).jobId;
   return (
-    <div className="mx-20">
-      <span className="inline-block w-auto">
-        {new Date(jobDetails.postingDate).toDateString()}
-      </span>
-      <h1 className="font-bold capitalize text-4xl my-2">
-        {`${jobDetails.title} | ${jobDetails.location}`}
-      </h1>
-      <div className="flex text-xs py-2 text-center w-1/4 justify-between">
-        <StyleContainer
-          showTitle={false}
-          title="Expected Salary"
-          value={jobDetails.salary}
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow mx-6 md:mx-20">
+        <span className="inline-block w-auto text-sm md:text-md">
+          {new Date(jobDetails.postingDate).toDateString()}
+        </span>
+        <h1 className="font-bold capitalize text-lg md:text-2xl md:my-2">
+          {`${jobDetails.title} | ${jobDetails.location}`}
+        </h1>
+        <div className="flex text-xs py-2 text-center gap-3">
+          <StyleContainer
+            showTitle={false}
+            title="Expected Salary"
+            value={jobDetails.salary}
+          />
+          <StyleContainer
+            showTitle={false}
+            title="Experience"
+            value={jobDetails.experience}
+          />
+          <StyleContainer
+            showTitle={false}
+            title="Job Type"
+            value={jobDetails.jobType}
+          />
+          <StyleContainer
+            showTitle={false}
+            title="Views"
+            value={`${jobDetails.views} views`}
+          />
+        </div>
+        <JobSection title="About Job" value={jobDetails.body.aboutJob} />
+        <JobSection title="Your Role" value={jobDetails.body.role} />
+        <JobSection title="Requirements" value={jobDetails.body.requirement} />
+        <JobSection
+          title="About Company"
+          value={jobDetails.body.aboutCompany}
         />
-        <StyleContainer
-          showTitle={false}
-          title="Experience"
-          value={jobDetails.experience}
-        />
-        <StyleContainer
-          showTitle={false}
-          title="Job Type"
-          value={jobDetails.jobType}
-        />
-        <StyleContainer
-          showTitle={false}
-          title="Views"
-          value={`${jobDetails.views} views`}
-        />
-      </div>
-      <JobSection title="About Job" value={jobDetails.body.aboutJob} />
-      <JobSection title="Your Role" value={jobDetails.body.role} />
-      <JobSection title="Requirements" value={jobDetails.body.requirement} />
-      <JobSection title="About Company" value={jobDetails.body.aboutCompany} />
 
-      <Button className="my-6 text-lg font-bold p-6" variant={"destructive"}>
-        <Link href={jobDetails.body.jobLink} target="_blank">
-          Apply
-        </Link>
-      </Button>
+        <Button
+          className="my-6 font-bold md:py-4 md:px-6"
+          variant={"destructive"}
+        >
+          <Link href={jobDetails.body.jobLink} target="_blank">
+            Apply
+          </Link>
+        </Button>
+      </div>
+      <Footer />
     </div>
   );
 };
