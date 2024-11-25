@@ -18,7 +18,7 @@ function CardContentCarousel({
     <div
       className={cn("relative rounded-md overflow-hidden", className)}
       style={{
-        backgroundImage: `url(${companyImg})`,
+        // backgroundImage: `url(${companyImg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
