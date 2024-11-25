@@ -16,11 +16,18 @@ function CardContentCarousel({
 }) {
   return (
     <div
-      className={cn("rounded-md", className)}
-      style={{ backgroundImage: `url(${companyImg})` }}
+      className={cn("relative rounded-md overflow-hidden", className)}
+      style={{
+        backgroundImage: `url(${companyImg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      <h1 className="text-xl font-bold md:text-3xl pt-2 pb-2x">{company}</h1>
-      <div className="flex flex-col w-full justify-evenly h-full gap-2 overflow-y-scroll p-3">
+      <div className="absolute inset-0 backdrop-blur-sm" />
+      <h1 className="relative text-xl font-bold md:text-3xl pt-2 pb-2">
+        {company}
+      </h1>
+      <div className="relative flex flex-col w-full justify-evenly h-full gap-2 overflow-y-scroll p-3">
         {openings.map((opening, idx) => {
           return (
             <CompanyRecentOpeningCard
