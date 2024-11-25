@@ -14,7 +14,7 @@ export function Footer() {
   return (
     <>
       <Separator />
-      <footer className="py-8">
+      <footer className="py-6">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-11 text-center">
             <div className="space-y-4">
@@ -98,7 +98,7 @@ export function Footer() {
               </div>
             </div>
           </div>
-          <Separator className="my-8" />
+          <Separator className="my-4" />
           <div className="text-center">
             <p>
               &copy; {new Date().getFullYear()} Grow As Engineer. All rights
