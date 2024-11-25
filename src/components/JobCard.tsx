@@ -1,72 +1,72 @@
 "use client";
-import { Job } from "@/models/Job";
-import Image from "next/image";
+
 import { useRouter } from "next/navigation";
-import StyleContainer from "./StyleContainer";
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  CalendarIcon,
+  BriefcaseIcon,
+  MapPinIcon,
+  CurrencyIcon as CurrencyDollarIcon,
+} from "lucide-react";
+import { Job } from "@/models/Job";
 
-const JobCard = ({
-  job,
-}: Readonly<{
-  job: Job;
-}>) => {
-  const {
-    jobId,
-    title,
-    location,
-    jobType,
-    salary,
-    experience,
-    postingDate,
-    postedBy,
-    companyLogo,
-    domain,
-  } = job;
-
-  const buttonCss =
-    "border bg-gray-200 rounded-sm w-auto p-1 px-2 dark:bg-accent";
+export function JobCard({ job }: Readonly<{ job: Job }>) {
   const router = useRouter();
+
   return (
-    <div
-      className="border-2 py-6 md:p-6 flex flex-col md:flex-row cursor-pointer"
-      onClick={() => router.push(`/job/${jobId}`)}
+    <Card
+      className="hover:shadow-lg transition-shadow cursor-pointer capitalize"
+      onClick={() => router.push(`/job/${job.jobId}`)}
     >
-      <div className="md:w-1/4">
-        <Image
-          className="rounded-md w-full h-full"
-          src={`${companyLogo}`}
-          alt="Company logo"
-          width={500}
-          height={500}
-          layout="responsive"
-        />
-      </div>
-      <div className="md:w-3/4 md:ml-6 mt-2 md:mt-0">
-        <h2 className="font-bold capitalize text-lg md:text-2xl text-justify">
-          {`${title} | ${location}`}
-        </h2>
-        <div className="capitalize text-xs my-3">
-          <span className={`${buttonCss} mr-4`}>{postedBy}</span>
-          <span className={buttonCss}>
-            {new Date(postingDate).toDateString()}
-          </span>
-        </div>
-        <div className="flex md:w-1/2 justify-between text-xs pt-4 text-center flex-wrap gap-4">
-          <StyleContainer showTitle={true} title="Domain" value={domain} />
-          <StyleContainer showTitle={true} title="Job Type" value={jobType} />
-          <StyleContainer
-            showTitle={true}
-            title="Experience"
-            value={experience}
-          />
-          <StyleContainer
-            showTitle={true}
-            title="Expected Salary"
-            value={salary}
+      <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+        <div className="w-16 h-16 relative rounded-full overflow-hidden">
+          <Image
+            src={job.companyLogo}
+            alt={`${job.postedBy} logo`}
+            fill
+            className="object-cover"
           />
         </div>
-      </div>
+        <div>
+          <CardTitle className="text-lg md:text-xl">{job.title}</CardTitle>
+          <Badge variant="secondary">{job.companyName}</Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          <JobDetail
+            icon={<MapPinIcon className="w-4 h-4" />}
+            value={job.location}
+          />
+          <JobDetail
+            icon={<BriefcaseIcon className="w-4 h-4" />}
+            value={job.jobType}
+          />
+          <JobDetail
+            icon={<CalendarIcon className="w-4 h-4" />}
+            value={job.experience}
+          />
+          <JobDetail
+            icon={<CurrencyDollarIcon className="w-4 h-4" />}
+            value={job.salary}
+          />
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="secondary">{job.domain}</Badge>
+          <Badge variant="secondary">{job.postingDate}</Badge>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function JobDetail({ icon, value }: { icon: React.ReactNode; value: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      {icon}
+      <span className="text-sm">{value}</span>
     </div>
   );
-};
-
-export default JobCard;
+}

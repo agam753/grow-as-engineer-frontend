@@ -9,4 +9,5 @@ export interface Job {
   postedBy: string;
   companyLogo: string;
   domain: string;
+  companyName: string;
 }
