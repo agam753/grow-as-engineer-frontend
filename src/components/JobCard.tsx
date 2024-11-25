@@ -10,26 +10,14 @@ import {
   MapPinIcon,
   CurrencyIcon as CurrencyDollarIcon,
 } from "lucide-react";
-
-interface Job {
-  jobId: string;
-  title: string;
-  location: string;
-  jobType: string;
-  salary: string;
-  experience: string;
-  postingDate: string;
-  postedBy: string;
-  companyLogo: string;
-  domain: string;
-}
+import { Job } from "@/models/Job";
 
 export function JobCard({ job }: Readonly<{ job: Job }>) {
   const router = useRouter();
 
   return (
     <Card
-      className="hover:shadow-lg transition-shadow cursor-pointer"
+      className="hover:shadow-lg transition-shadow cursor-pointer capitalize"
       onClick={() => router.push(`/job/${job.jobId}`)}
     >
       <CardHeader className="flex flex-row items-center gap-4 space-y-0">
@@ -43,7 +31,7 @@ export function JobCard({ job }: Readonly<{ job: Job }>) {
         </div>
         <div>
           <CardTitle className="text-lg md:text-xl">{job.title}</CardTitle>
-          <p className="text-sm text-muted-foreground">{job.postedBy}</p>
+          <Badge variant="secondary">{job.companyName}</Badge>
         </div>
       </CardHeader>
       <CardContent>
@@ -67,7 +55,7 @@ export function JobCard({ job }: Readonly<{ job: Job }>) {
         </div>
         <div className="flex flex-wrap gap-2">
           <Badge variant="secondary">{job.domain}</Badge>
-          <Badge variant="outline">{job.postingDate}</Badge>
+          <Badge variant="secondary">{job.postingDate}</Badge>
         </div>
       </CardContent>
     </Card>
