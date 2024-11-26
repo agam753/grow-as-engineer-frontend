@@ -3,7 +3,7 @@
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { Card } from "@/components/ui/card";
-import CardContentCarousel from "./cardContentCarousel/cardContentCarousel";
+import CarouselCard from "./carouselCard/carouselCard";
 import {
   Carousel,
   CarouselContent,
@@ -45,7 +45,7 @@ export function SharedCarousel({
             >
               <div className="p-1">
                 <Card className="h-[400px]">
-                  <CardContentCarousel
+                  <CarouselCard
                     className="flex items-center justify-evenly flex-col h-full"
                     openings={companyData.openings}
                     company={companyData.company}

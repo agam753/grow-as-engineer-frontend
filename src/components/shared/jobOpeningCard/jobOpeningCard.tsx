@@ -18,7 +18,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const JobCard = ({
+const JobOpeningCard = ({
   jobDetail,
   company,
   cardContainerClass,
@@ -91,4 +91,4 @@ const JobCard = ({
   );
 };
 
-export default JobCard;
+export default JobOpeningCard;

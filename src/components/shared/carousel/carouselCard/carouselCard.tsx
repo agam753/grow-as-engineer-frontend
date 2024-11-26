@@ -1,9 +1,9 @@
 import { JobDetails } from "@/interfaces/carousel";
 import React from "react";
-import CompanyRecentOpeningCard from "../companyRecentOpeningCard/companyRecentOpeningCard";
 import { cn } from "@/lib/utils";
+import JobOpeningCard from "../../jobOpeningCard/jobOpeningCard";
 
-function CardContentCarousel({
+function CarouselCard({
   openings,
   className,
   company,
@@ -30,7 +30,7 @@ function CardContentCarousel({
       <div className="relative flex flex-col w-full justify-evenly h-full gap-2 overflow-y-scroll p-3 mb-2">
         {openings.map((opening, idx) => {
           return (
-            <CompanyRecentOpeningCard
+            <JobOpeningCard
               key={idx}
               jobDetail={opening}
               company={company}
@@ -43,4 +43,4 @@ function CardContentCarousel({
   );
 }
 
-export default CardContentCarousel;
+export default CarouselCard;
