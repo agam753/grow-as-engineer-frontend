@@ -17,7 +17,7 @@ const NavigationBar = () => {
   const navIconCss = "text-center w-full md:w-auto md:font-semibold";
   const [showSearch, setShowSearch] = useState<boolean>(false);
   return (
-    <nav className="flex justify-between align-middle p-4 mb-6 gap-2 border-b">
+    <nav className="navigationBar flex justify-between align-middle p-4 mb-4 gap-2 border-b backdrop-blur-lg sticky top-0 z-20 bg-opacity-70">
       {showSearch ? (
         <NavSearchBar />
       ) : (
