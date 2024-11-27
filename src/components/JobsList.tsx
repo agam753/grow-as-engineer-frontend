@@ -139,7 +139,7 @@ const initialJobs: Array<Job> = [
 const JobsList = () => {
   const [jobs, setJobs] = useState<Array<Job>>(initialJobs);
   return (
-    <div className="joblist flex flex-col h-screen overflow-y-scroll gap-4 md:w-3/4">
+    <div className="joblist flex flex-col gap-4 md:w-3/4">
       {jobs.map((job, index) => (
         <JobCard key={job.jobId + index} job={job} />
       ))}
