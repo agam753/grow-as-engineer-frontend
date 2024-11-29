@@ -306,7 +306,7 @@ export default function Home() {
   return (
     <main className="flex flex-col gap-4">
       <SharedCarousel data={carouselArray} />
-      <div className="flex flex-col-reverse md:flex-row mx-4 gap-4">
+      <div className="flex flex-col-reverse md:flex-row mx-4 gap-4 md:px-12">
         <JobsList />
         <FilterProvider>
           <NoSsrJobFilters />

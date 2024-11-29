@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import JobSection from "@/components/JobSection";
-import StyleContainer from "@/components/StyleContainer";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -34,27 +34,11 @@ const JobPage = async ({ params }: { params: Promise<{ jobId: string }> }) => {
         <h1 className="font-bold capitalize text-lg md:text-2xl md:my-2">
           {`${jobDetails.title} | ${jobDetails.location}`}
         </h1>
-        <div className="flex text-xs py-2 text-center gap-3">
-          <StyleContainer
-            showTitle={false}
-            title="Expected Salary"
-            value={jobDetails.salary}
-          />
-          <StyleContainer
-            showTitle={false}
-            title="Experience"
-            value={jobDetails.experience}
-          />
-          <StyleContainer
-            showTitle={false}
-            title="Job Type"
-            value={jobDetails.jobType}
-          />
-          <StyleContainer
-            showTitle={false}
-            title="Views"
-            value={`${jobDetails.views} views`}
-          />
+        <div className="flex gap-4 my-2">
+          <Badge variant="secondary">{jobDetails.salary}</Badge>
+          <Badge variant="secondary">{jobDetails.experience}</Badge>
+          <Badge variant="secondary">{jobDetails.jobType}</Badge>
+          <Badge variant="secondary">{`${jobDetails.views} views`}</Badge>
         </div>
         <JobSection title="About Job" value={jobDetails.body.aboutJob} />
         <JobSection title="Your Role" value={jobDetails.body.role} />

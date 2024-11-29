@@ -42,7 +42,7 @@ const NavSearchBar = () => {
             </ScrollArea>
           ) : (
             <li className="border p-2 hover:cursor-pointer hover:bg-accent">
-              No Job Found
+              No Option
             </li>
           )}
         </ul>

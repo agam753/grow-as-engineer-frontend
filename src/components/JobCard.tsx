@@ -20,8 +20,8 @@ export function JobCard({ job }: Readonly<{ job: Job }>) {
       className="hover:shadow-lg transition-shadow cursor-pointer capitalize"
       onClick={() => router.push(`/job/${job.jobId}`)}
     >
-      <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-        <div className="w-16 h-16 relative rounded-full overflow-hidden">
+      <CardHeader className="flex flex-row items-center gap-4 px-3 md:p-4">
+        <div className="w-20 h-20 relative rounded-full overflow-hidden">
           <Image
             src={job.companyLogo}
             alt={`${job.postedBy} logo`}
@@ -29,13 +29,15 @@ export function JobCard({ job }: Readonly<{ job: Job }>) {
             className="object-cover"
           />
         </div>
-        <div>
-          <CardTitle className="text-lg md:text-xl">{job.title}</CardTitle>
+        <div className="text-justify w-3/4">
+          <CardTitle className="md:text-xl leading-relaxed">
+            {job.title}
+          </CardTitle>
           <Badge variant="secondary">{job.companyName}</Badge>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-4 my-4 md:w-3/4">
           <JobDetail
             icon={<MapPinIcon className="w-4 h-4" />}
             value={job.location}
@@ -64,7 +66,7 @@ export function JobCard({ job }: Readonly<{ job: Job }>) {
 
 function JobDetail({ icon, value }: { icon: React.ReactNode; value: string }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 w-fit">
       {icon}
       <span className="text-sm">{value}</span>
     </div>
