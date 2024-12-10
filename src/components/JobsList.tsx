@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Job } from "@/models/Job";
+import { Job } from "@/interfaces/Job";
 import { JobCard } from "./JobCard";
 
 const initialJobs: Array<Job> = [
@@ -141,7 +141,7 @@ const JobsList = () => {
   return (
     <div className="joblist flex flex-col gap-4 md:w-3/4">
       {jobs.map((job, index) => (
-        <JobCard key={job.jobId + index} job={job} />
+        <JobCard isCraousalJob={false} key={job.jobId + index} job={job} />
       ))}
     </div>
   );

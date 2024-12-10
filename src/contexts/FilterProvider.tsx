@@ -4,7 +4,7 @@ import {
   FilterAction,
   FilterContextState,
   FilterState,
-} from "@/models/FilterState";
+} from "@/interfaces/FilterState";
 import { FilterContext } from "./filter-context";
 
 const min_exp =

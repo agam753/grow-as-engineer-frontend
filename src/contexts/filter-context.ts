@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { FilterContextState } from "@/models/FilterState";
+import { FilterContextState } from "@/interfaces/FilterState";
 
 const defaultFilterContextValue: FilterContextState = {
   filterState: {

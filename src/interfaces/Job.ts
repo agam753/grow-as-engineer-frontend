@@ -5,9 +5,9 @@ export interface Job {
   jobType: string;
   salary: string;
   experience: string;
-  postingDate: string;
-  postedBy: string;
-  companyLogo: string;
   domain: string;
-  companyName: string;
+  postingDate: string;
+  postedBy?: string;
+  companyLogo?: string;
+  companyName?: string;
 }
