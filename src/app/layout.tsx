@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NavigationBar from "@/components/NavigationBar";
 import { usePathname } from "next/navigation";
+import Footer from "@/components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,19 +26,20 @@ export default function RootLayout({
   const showNavigationBar = !pathname.includes("/dashboard");
 
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="light">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {showNavigationBar ? (
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >
-            {showNavigationBar && <NavigationBar />}
+            <NavigationBar />
             {children}
+            <Footer />
           </ThemeProvider>
         ) : (
           children

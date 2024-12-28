@@ -1,35 +1,20 @@
 "use client";
+import { DashboardNavbar } from "@/components/shared/dashboard/DashboardNavbar";
 import { Toaster } from "@/components/ui/toaster";
-import { AuthProvider, useAuth } from "@/contexts/authContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
-const ProtectedContent: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const { token } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (token === null) {
-      router.replace("/dashboard/login");
-    }
-  }, [token, router]);
-
-  return <>{children}</>;
-};
+import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathName = usePathname();
+  const isLoginPage = pathName === "/dashboard/login";
   return (
-    <AuthProvider>
-      <main>
-        <ProtectedContent>{children}</ProtectedContent>
-        <Toaster />
-      </main>
-    </AuthProvider>
+    <main>
+      {!isLoginPage && <DashboardNavbar />}
+      {children}
+      <Toaster />
+    </main>
   );
 }

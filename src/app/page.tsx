@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import JobsList from "@/components/JobsList";
 import { SharedCarousel } from "@/components/shared/carousel/carousel";
 import { FilterProvider } from "@/contexts/FilterProvider";
@@ -491,7 +490,6 @@ export default function Home() {
           <NoSsrJobFilters />
         </FilterProvider>
       </div>
-      <Footer />
     </main>
   );
 }

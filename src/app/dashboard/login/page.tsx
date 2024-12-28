@@ -1,18 +1,22 @@
 "use client";
 
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { useAuth } from "@/contexts/authContext";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const LoginPage = () => {
   const { toast } = useToast();
-  const { login } = useAuth();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const showToast = (title: string, description: string, variant: any) => {
+  const showToast = (
+    title: string,
+    description: string,
+    variant: "destructive" | "default"
+  ) => {
     toast({
       title,
       description,
@@ -26,6 +30,7 @@ const LoginPage = () => {
     fetch(uri, {
       method: "POST",
       body: JSON.stringify({ username, password }),
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -41,12 +46,13 @@ const LoginPage = () => {
         return response.json();
       })
       .then((data) => {
-        const { accessToken, user } = data.data;
+        console.log(data);
+        const { user } = data.data;
         showToast("Login Successful", `Welcome ${user.username}`, "default");
-        console.log(user);
-        login(accessToken);
+        router.replace("/dashboard");
       })
       .catch((error) => {
+        console.log(error);
         showToast("Login Error Occured", `${error}`, "destructive");
       })
       .finally(() => {
