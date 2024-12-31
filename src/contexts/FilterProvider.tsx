@@ -7,14 +7,10 @@ import {
 } from "@/interfaces/FilterState";
 import { FilterContext } from "./filter-context";
 
-const min_exp =
-  process.env.NEXT_PUBLIC_EXP_FILTER_VALUES?.split(",").at(0) || "0";
-const max_exp =
-  process.env.NEXT_PUBLIC_EXP_FILTER_VALUES?.split(",").at(-1) || "10";
-const min_salary =
-  process.env.NEXT_PUBLIC_SALARY_FILTER_VALUES?.split(",").at(0) || "0";
-const max_salary =
-  process.env.NEXT_PUBLIC_SALARY_FILTER_VALUES?.split(",").at(-1) || "50";
+const min_exp = `${process.env.EXP_FILTER_VALUES?.split(",").at(0)}`;
+const max_exp = `${process.env.EXP_FILTER_VALUES?.split(",").at(-1)}`;
+const min_salary = `${process.env.SALARY_FILTER_VALUES?.split(",").at(0)}`;
+const max_salary = `${process.env.SALARY_FILTER_VALUES?.split(",").at(-1)}`;
 // initial filter state
 const initialFilterState: FilterState = {
   jobType: [],

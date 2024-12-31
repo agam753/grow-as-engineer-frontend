@@ -1,147 +1,38 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Job } from "@/interfaces/Job";
 import { JobCard } from "./JobCard";
-
-const initialJobs: Array<Job> = [
-  {
-    jobId: "abc1",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Amazon",
-  },
-  {
-    jobId: "abc2",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Google",
-  },
-  {
-    jobId: "abc3",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Microsoft",
-  },
-  {
-    jobId: "abc4",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Facebook",
-  },
-  {
-    jobId: "abc5",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Amazon",
-  },
-  {
-    jobId: "abc1",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Amazon",
-  },
-  {
-    jobId: "abc2",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Google",
-  },
-  {
-    jobId: "abc3",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Microsoft",
-  },
-  {
-    jobId: "abc4",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Facebook",
-  },
-  {
-    jobId: "abc5",
-    title: "Software Engineer",
-    location: "Noida",
-    jobType: "Full time",
-    salary: "10-20LPA",
-    experience: "2+ yrs",
-    postingDate: "7 Nov, 2024",
-    postedBy: "admin",
-    companyLogo: "/assets/Amazon.jpg",
-    domain: "backend",
-    companyName: "Amazon",
-  },
-];
+import { getJobList } from "@/helpers/userHttpHelper";
+import { useFilter } from "@/contexts/FilterProvider";
+import { FilterStateQueryParams } from "@/interfaces/FilterState";
 
 const JobsList = () => {
-  const [jobs, setJobs] = useState<Array<Job>>(initialJobs);
+  const [jobs, setJobs] = useState<Array<Job>>([]);
+  const { filterState } = useFilter();
+
+  useEffect(() => {
+    const getJobs = async () => {
+      try {
+        console.log("Fetching job data");
+        const { jobList } = await getJobList(
+          FilterStateQueryParams(filterState)
+        );
+        setJobs(jobList);
+      } catch (error) {
+        console.error("Error fetching job data:", error);
+      }
+    };
+
+    getJobs();
+  }, [filterState]);
   return (
     <div className="joblist flex flex-col gap-4 md:w-3/4">
       {jobs.map((job, index) => (
-        <JobCard isCraousalJob={false} key={job.jobId + index} job={job} />
+        <JobCard
+          isCraousalJob={false}
+          key={job._id && job._id + index}
+          job={job}
+        />
       ))}
     </div>
   );

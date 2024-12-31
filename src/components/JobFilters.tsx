@@ -9,8 +9,6 @@ import MinMaxFilter from "./MinMaxFilter";
 
 const JobFilters = () => {
   const { filterState, dispatch, appliedFilterCount } = useFilter();
-  console.log(filterState);
-
   return (
     <>
       {/* Mobile View */}
@@ -51,24 +49,24 @@ const JobFilters = () => {
             </div>
             <div className="my-6">
               <h2 className="text-md font-bold">Job Type</h2>
-              <ToggleButton name="Full Time" value="full-time" />
-              <ToggleButton name="Internship" value="intern" />
+              <ToggleButton name="Full Time" value="fulltime" />
+              <ToggleButton name="Internship" value="internship" />
             </div>
             {/* Experience Filter List */}
             <MinMaxFilter
               heading="experience"
               type="EXP"
-              filterValues={
-                process.env.NEXT_PUBLIC_EXP_FILTER_VALUES?.split(",") || []
-              }
+              filterValues={process.env.EXP_FILTER_VALUES?.split(",") || []}
+              minValue={filterState.experience.min}
+              maxValue={filterState.experience.max}
             />
             {/* Salary Filter List */}
             <MinMaxFilter
               type="SALARY"
               heading="salary (LPA)"
-              filterValues={
-                process.env.NEXT_PUBLIC_SALARY_FILTER_VALUES?.split(",") || []
-              }
+              filterValues={process.env.SALARY_FILTER_VALUES?.split(",") || []}
+              minValue={filterState.salary.min}
+              maxValue={filterState.salary.max}
             />
             <div className="my-6">
               <h2 className="text-md font-bold my-2">Domain</h2>
@@ -99,24 +97,24 @@ const JobFilters = () => {
         </div>
         <div className="my-6">
           <h2 className="text-md font-bold">Job Type</h2>
-          <ToggleButton name="Full Time" value="full-time" />
-          <ToggleButton name="Internship" value="intern" />
+          <ToggleButton name="Full Time" value="fulltime" />
+          <ToggleButton name="Internship" value="internship" />
         </div>
         {/* Experience Filter List */}
         <MinMaxFilter
           heading="experience"
           type="EXP"
-          filterValues={
-            process.env.NEXT_PUBLIC_EXP_FILTER_VALUES?.split(",") || []
-          }
+          filterValues={process.env.EXP_FILTER_VALUES?.split(",") || []}
+          minValue={filterState.experience.min}
+          maxValue={filterState.experience.max}
         />
         {/* Salary Filter List */}
         <MinMaxFilter
           type="SALARY"
           heading="salary (LPA)"
-          filterValues={
-            process.env.NEXT_PUBLIC_SALARY_FILTER_VALUES?.split(",") || []
-          }
+          filterValues={process.env.SALARY_FILTER_VALUES?.split(",") || []}
+          minValue={filterState.salary.min}
+          maxValue={filterState.salary.max}
         />
         <div className="my-6">
           <h2 className="text-md font-bold my-2">Domain</h2>
