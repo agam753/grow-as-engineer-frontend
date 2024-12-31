@@ -1,5 +1,6 @@
 "use client";
 
+import { getRequest } from "@/helpers/httpHelper";
 import { DashBoardUser } from "@/interfaces/Dashboard";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -10,23 +11,13 @@ const AdminPanel = () => {
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
-        const reqUrl = "http://localhost:8000/users/get-user";
-        const response = await fetch(reqUrl, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-        const data = await response.json();
-        setUser(data.data);
+        const response = await getRequest("/users/current-user");
+        setUser(response.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
+
     getCurrentUser();
   }, []);
 
@@ -49,7 +40,6 @@ const AdminPanel = () => {
           <p className="text-gray-600">
             Email: {user ? user.email : "email@gmail.com"}
           </p>
-          {/* <p>{JSON.stringify(user)}</p> */}
         </div>
       </div>
     </div>

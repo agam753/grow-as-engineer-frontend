@@ -34,11 +34,10 @@ export default function RootLayout({
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
-            enableSystem
             disableTransitionOnChange
           >
             <NavigationBar />
-            {children}
+            <div className="py-4">{children}</div>
             <Footer />
           </ThemeProvider>
         ) : (

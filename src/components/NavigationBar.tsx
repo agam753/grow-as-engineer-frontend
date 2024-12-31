@@ -17,7 +17,7 @@ const NavigationBar = () => {
   const navIconCss = "text-center w-full md:w-auto md:font-semibold";
   const [showSearch, setShowSearch] = useState<boolean>(false);
   return (
-    <nav className="navigationBar flex justify-between align-middle p-4 mb-4 gap-2 border-b backdrop-blur-lg sticky top-0 z-20 bg-opacity-70">
+    <nav className="navigationBar flex justify-between align-middle p-4 gap-2 border-b backdrop-blur-lg sticky top-0 z-20 bg-opacity-70">
       {showSearch ? (
         <NavSearchBar />
       ) : (
@@ -42,13 +42,13 @@ const NavigationBar = () => {
             <MenuIcon />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <Link href="/remote-jobs">
+            {/* <Link href="/remote-jobs">
               <DropdownMenuItem>
                 <Button className={navIconCss} variant={"ghost"}>
                   Remote Jobs
                 </Button>
               </DropdownMenuItem>
-            </Link>
+            </Link> */}
             <Link href="/contact">
               <DropdownMenuItem asChild>
                 <Button className={navIconCss} variant={"ghost"}>
@@ -75,11 +75,11 @@ const NavigationBar = () => {
         <NavSearchBar />
       </div>
       <ul className="hidden md:flex">
-        <li>
+        {/* <li>
           <Button className={navIconCss} asChild variant={"ghost"}>
             <Link href="/remote-jobs">Remote Jobs</Link>
           </Button>
-        </li>
+        </li> */}
         <li>
           <Button className={navIconCss} asChild variant={"ghost"}>
             <Link href="/contact">Contact Us</Link>

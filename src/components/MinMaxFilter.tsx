@@ -12,15 +12,10 @@ const MinMaxFilter: React.FC<{
   heading: string;
   filterValues: Array<string>;
   type: string;
-}> = ({ heading, filterValues, type }) => {
-  const values = filterValues.map((value) => value);
-  const {
-    filterState: { experience, salary },
-    dispatch,
-  } = useFilter();
-
-  const minValue = type === "EXP" ? experience.min : salary.min;
-  const maxValue = type === "EXP" ? experience.max : salary.max;
+  minValue: string;
+  maxValue: string;
+}> = ({ heading, filterValues, type, minValue, maxValue }) => {
+  const { dispatch } = useFilter();
   const minValueChangeHandler = (value: string) => {
     dispatch({ type: `SET_MIN_${type as "EXP" | "SALARY"}`, payload: value });
   };
@@ -36,9 +31,9 @@ const MinMaxFilter: React.FC<{
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {values.map(
+            {filterValues.map(
               (value, index) =>
-                Number(value) < Number(maxValue) && (
+                parseInt(value) < parseInt(maxValue) && (
                   <SelectItem key={index} value={value}>
                     {value}
                   </SelectItem>
@@ -53,9 +48,9 @@ const MinMaxFilter: React.FC<{
           <SelectContent>
             {filterValues.map(
               (value, index) =>
-                Number(value) > Number(minValue) && (
+                parseInt(value) > parseInt(minValue) && (
                   <SelectItem key={index} value={value}>
-                    {index + 1 === filterValues.length ? `${value}+` : value}
+                    {value}
                   </SelectItem>
                 )
             )}

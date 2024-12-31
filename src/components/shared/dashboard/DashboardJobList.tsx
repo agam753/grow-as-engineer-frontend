@@ -9,7 +9,7 @@ const DashboardJobList: React.FC<{ jobs: Array<Job> }> = ({ jobs }) => {
     <Card className="rounded-md">
       <ul>
         {jobs.map((job) => (
-          <DashboardJobItem key={job.jobId} data={job} />
+          <DashboardJobItem key={job._id} data={job} />
         ))}
       </ul>
     </Card>

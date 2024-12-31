@@ -21,16 +21,16 @@ export function JobCard({
   return (
     <Card
       className="hover:shadow-lg transition-shadow cursor-pointer capitalize my-1"
-      onClick={() => router.push(`/job/${job.jobId}`)}
+      onClick={() => router.push(`/job/${job._id}`)}
     >
       <CardHeader className="flex flex-row items-center gap-4 px-3 md:p-4">
         {!isCraousalJob && (
-          <div className="w-20 h-20 relative rounded-full overflow-hidden">
+          <div className="w-16 h-16 md:w-24 md:h-24 relative rounded-full overflow-hidden shadow-md">
             <Image
-              src={job.companyLogo || "/default-logo.png"}
-              alt={`${job.postedBy} logo`}
+              src={job.jobDetails.jobThumbnail || "/assets/google.svg"}
+              alt={`${job.companyName} logo`}
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         )}
@@ -40,9 +40,7 @@ export function JobCard({
             isCraousalJob && "flex justify-between items-center w-full"
           }`}
         >
-          <CardTitle className="md:text-xl leading-relaxed">
-            {job.title}
-          </CardTitle>
+          <CardTitle className="md:text-xl text-left">{job.title}</CardTitle>
           <Badge className={`${!isCraousalJob && "mt-2"}`} variant="secondary">
             {isCraousalJob ? "New" : job.companyName}
           </Badge>
@@ -56,7 +54,7 @@ export function JobCard({
         >
           <JobDetail
             icon={<MapPinIcon className="w-4 h-4" />}
-            value={job.location}
+            value={job.jobLocation}
           />
           <JobDetail
             icon={<BriefcaseIcon className="w-4 h-4" />}
@@ -73,7 +71,9 @@ export function JobCard({
         </div>
         <div className="flex flex-wrap gap-2">
           <Badge variant="secondary">{job.domain}</Badge>
-          <Badge variant="secondary">{job.postingDate}</Badge>
+          <Badge variant="secondary">
+            {new Date(job.postingDate).toDateString()}
+          </Badge>
         </div>
       </CardContent>
     </Card>

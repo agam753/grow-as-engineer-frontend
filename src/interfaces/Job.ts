@@ -1,13 +1,21 @@
 export interface Job {
-  jobId: string;
+  _id?: string;
   title: string;
-  location: string;
-  jobType: string;
+  jobLocation: string;
+  companyName: string;
   salary: string;
   experience: string;
   domain: string;
+  jobType: string;
   postingDate: string;
   postedBy?: string;
-  companyLogo?: string;
-  companyName?: string;
+  jobDetails: {
+    aboutJob: string;
+    aboutRole: string;
+    aboutCompany: string;
+    requirements: string;
+    jobLink: string;
+    jobThumbnail: string;
+  };
+  views?: number;
 }

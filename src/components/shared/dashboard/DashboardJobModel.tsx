@@ -14,12 +14,15 @@ import { Button } from "@/components/ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 import FormTextArea from "./FormTextArea";
 import { useToast } from "@/hooks/use-toast";
+import { Job } from "@/interfaces/Job";
+import { getJobById } from "@/helpers/userHttpHelper";
+import { postJob, putJob } from "@/helpers/adminHttpHelper";
 
-const initialState = {
+const initialState: Job = {
   title: "",
   jobLocation: "",
   companyName: "",
-  salaryRange: "",
+  salary: "",
   experience: "",
   domain: "",
   jobType: "",
@@ -30,6 +33,7 @@ const initialState = {
     aboutCompany: "",
     requirements: "",
     jobLink: "",
+    jobThumbnail: "",
   },
 };
 const DashboardJobModel: React.FC<{
@@ -41,22 +45,13 @@ const DashboardJobModel: React.FC<{
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState<Job>(initialState);
 
   useEffect(() => {
-    const fetchJob = async () => {
+    const fetchJob = async (_id: string) => {
       try {
         setIsLoading(true);
-        const response = await fetch(`/api/jobs/${jobId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch job data");
-        }
-        const data = await response.json();
+        const data = await getJobById(_id);
         setFormData(data);
       } catch (error) {
         console.error("Error fetching job data:", error);
@@ -66,7 +61,7 @@ const DashboardJobModel: React.FC<{
     };
 
     if (isEdit && jobId) {
-      fetchJob();
+      fetchJob(jobId);
     } else {
       setIsLoading(false);
     }
@@ -86,55 +81,48 @@ const DashboardJobModel: React.FC<{
     }
   };
 
-  const formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const formSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const isValid = Object.values(formData).every((value) =>
       typeof value === "string"
         ? value.trim() !== ""
-        : Object.values(value).every((v) => v.trim() !== "")
+        : Object.values(value as Record<string, string>).every(
+            (v: string) => v.trim() !== ""
+          )
     );
     if (!isValid) {
       alert("Please fill in all fields.");
       return;
     }
 
-    const url = `http://localhost:8000/jobs${isEdit ? jobId : ""}`;
-    const method = isEdit ? "PUT" : "POST";
-
-    const sendData = async (method: string, url: string) => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(url, {
-          method,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-        if (!response.ok) {
-          throw new Error("Failed to save job data");
-        }
-        toast({
-          title: "Job saved successfully!",
-          variant: "default",
-          description: "Job data saved successfully.",
-        });
-        // if successfully saved, close the dialog
-        setIsOpen(false);
-        setFormData(initialState);
-      } catch (error) {
-        const errorMessage = (error as Error).message;
-        toast({
-          title: "Failed to save job data",
-          variant: "destructive",
-          description: errorMessage,
-        });
-        console.error("Error saving job:", error);
-      } finally {
-        setIsLoading(false);
+    try {
+      switch (isEdit) {
+        case true:
+          await putJob(formData);
+          break;
+        default:
+          await postJob(formData);
+          break;
       }
-    };
-    sendData(method, url);
+
+      setIsOpen(false);
+      setFormData(initialState);
+      toast({
+        title: "Job saved successfully!",
+        variant: "default",
+        description: "Job data saved successfully.",
+      });
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      toast({
+        title: "Failed to save job data",
+        variant: "destructive",
+        description: errorMessage,
+      });
+      console.error("Error saving job:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -176,8 +164,8 @@ const DashboardJobModel: React.FC<{
                   />
                   <FormInput
                     label="Salary"
-                    name="salaryRange"
-                    value={formData.salaryRange}
+                    name="salary"
+                    value={formData.salary}
                     onChange={handleInputChange}
                   />
                   <FormInput
@@ -234,6 +222,12 @@ const DashboardJobModel: React.FC<{
                     label="Job Link"
                     name="jobLink"
                     value={formData.jobDetails.jobLink}
+                    onChange={handleInputChange}
+                  />
+                  <FormTextArea
+                    label="Job Thumbnail"
+                    name="jobThumbnail"
+                    value={formData.jobDetails.jobThumbnail}
                     onChange={handleInputChange}
                   />
                 </div>

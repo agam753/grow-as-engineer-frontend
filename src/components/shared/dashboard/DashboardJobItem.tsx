@@ -6,10 +6,10 @@ const DashboardJobItem: React.FC<{ data: Job }> = ({ data }) => {
     <div className="flex justify-between items-center p-4 bg-white shadow-md rounded-lg border-b">
       <div className="flex flex-col">
         <span className="text-lg font-semibold">{data.title}</span>
-        <span className="text-sm text-gray-500">{data.jobId}</span>
+        <span className="text-sm text-gray-500">{data._id}</span>
       </div>
       <div className="flex space-x-2">
-        <DashboardJobModel title="Edit Job">
+        <DashboardJobModel title="Edit Job" isEdit={true} jobId={data._id}>
           <Button
             variant={"ghost"}
             className="px-4 py-2 capitalize border border-gray-300 rounded-md"
