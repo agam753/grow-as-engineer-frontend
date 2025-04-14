@@ -20,12 +20,14 @@ export function JobCard({
 
   return (
     <Card
-      className="hover:shadow-lg transition-shadow cursor-pointer capitalize my-1"
+      className={`hover:shadow-lg transition-shadow cursor-pointer capitalize my-1 ${
+        !isCraousalJob && "jobItem"
+      }`}
       onClick={() => router.push(`/job/${job._id}`)}
     >
       <CardHeader className="flex flex-row items-center gap-4 px-3 md:p-4">
         {!isCraousalJob && (
-          <div className="w-16 h-16 md:w-24 md:h-24 relative rounded-full overflow-hidden shadow-md">
+          <div className="w-16 h-16 md:w-24 md:h-24 relative rounded-full overflow-hidden shadow-md bg-white">
             <Image
               src={job.jobDetails.jobThumbnail || "/assets/google.svg"}
               alt={`${job.companyName} logo`}

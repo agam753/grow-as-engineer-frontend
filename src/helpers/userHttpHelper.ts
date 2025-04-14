@@ -16,7 +16,8 @@ export const getJobList = async (params?: string) => {
   }
 
   const data = await response.json();
-  return { jobList: data.data, jobCount: data.totalCount };
+  const { totalCount, data: jobList } = data;
+  return { jobList, totalCount };
 };
 
 export const getJobById = async (jobId: string) => {

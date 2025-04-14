@@ -1,6 +1,7 @@
 "use client";
 
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { userLogin } from "@/helpers/adminHttpHelper";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -25,39 +26,18 @@ const LoginPage = () => {
   };
 
   const authenticateUser = async (username: string, password: string) => {
-    setIsLoading(true);
-    const uri = `http://localhost:8000/users/login`;
-    fetch(uri, {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          showToast(
-            "Login Error Occured",
-            `${response.statusText}`,
-            "destructive"
-          );
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        const { user } = data.data;
-        showToast("Login Successful", `Welcome ${user.username}`, "default");
-        router.replace("/dashboard");
-      })
-      .catch((error) => {
-        console.log(error);
-        showToast("Login Error Occured", `${error}`, "destructive");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      setIsLoading(true);
+      const { user } = await userLogin(username, password);
+      showToast("Login Successful", `Welcome ${user.username}`, "default");
+      router.replace("/control-panel");
+    } catch (error) {
+      console.log(error);
+      const errorMessage = (error as Error).message || "An error occured";
+      showToast("Login Error Occured", `${errorMessage}`, "destructive");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const userLoginHandler = (event: React.FormEvent) => {
@@ -79,7 +59,7 @@ const LoginPage = () => {
             id="username"
             name="username"
             required
-            className="mt-1 p-2 w-full border rounded text-accent outline-none"
+            className="mt-1 p-2 w-full border rounded  outline-none"
             disabled={isLoading}
             onChange={(e) => setUsername(e.target.value)}
             value={username}
@@ -94,7 +74,7 @@ const LoginPage = () => {
             id="password"
             name="password"
             required
-            className="mt-1 p-2 w-full border rounded text-accent outline-none"
+            className="mt-1 p-2 w-full border rounded outline-none"
             disabled={isLoading}
             onChange={(e) => setPassword(e.target.value)}
             value={password}

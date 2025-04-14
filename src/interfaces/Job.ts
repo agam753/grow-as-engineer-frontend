@@ -19,3 +19,13 @@ export interface Job {
   };
   views?: number;
 }
+
+export interface Pagination {
+  limit: number;
+  page: number;
+  startIndex?: number;
+  totalDocuments?: number;
+  nextPage?: number;
+}
+
+export const PaginationLimit = parseInt(process.env.PAGINATION_LIMIT || "10");
