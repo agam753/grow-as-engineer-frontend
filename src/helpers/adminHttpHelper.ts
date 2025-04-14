@@ -62,14 +62,34 @@ export const deleteJob = async (jobId: string) => {
   return data.data;
 };
 
-export const userLogin = async (email: string, password: string) => {
+export const userLogin = async (username: string, password: string) => {
   const url = `${BASE_URL}/users/login`;
   const options: RequestInit = {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ username, password }),
+  };
+
+  const response = await fetch(url, options);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data.data;
+};
+
+export const userLogout = async () => {
+  const url = `${BASE_URL}/users/logout`;
+  const options: RequestInit = {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
 
   const response = await fetch(url, options);

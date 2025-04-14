@@ -10,22 +10,34 @@ interface JwtPayload {
   fullName: string;
 }
 
+const isTokenValid = (token: string) => {
+  const decodedToken = jwtDecode<JwtPayload>(token);
+  const expiryTime = decodedToken.exp * 1000;
+  const currentTime = Date.now();
+  return currentTime < expiryTime;
+};
+
 export function middleware(request: NextRequest) {
   try {
     const token = request.cookies.get("accessToken")?.value;
-    if (!token) {
-      throw (new Error("No token found"), { status: 101 });
-    }
-    const decodedToken = jwtDecode<JwtPayload>(token);
-    const expiryTime = decodedToken.exp * 1000;
-    const currentTime = Date.now();
+    const isLoginPage = request.nextUrl.pathname === "/login";
 
-    if (currentTime >= expiryTime) {
-      throw (new Error("Token expired"), { status: 101 });
+    if (isLoginPage) {
+      if (token && isTokenValid(token)) {
+        const controlPanelUrl = new URL(
+          "/control-panel",
+          request.nextUrl.origin
+        );
+        return NextResponse.redirect(controlPanelUrl.toString());
+      }
+    } else {
+      if (!token || !isTokenValid(token)) {
+        throw new Error("Invalid token");
+      }
     }
   } catch (error) {
     console.log(error);
-    const loginUrl = new URL("/dashboard/login", request.nextUrl.origin);
+    const loginUrl = new URL("/login", request.nextUrl.origin);
     return NextResponse.redirect(loginUrl.toString());
   }
 
@@ -33,5 +45,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/jobs", "/dashboard/users", "/dashboard"],
+  matcher: ["/control-panel/:path*", "/login"],
 };

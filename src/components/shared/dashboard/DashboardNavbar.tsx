@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { userLogout } from "@/helpers/adminHttpHelper";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,32 +14,19 @@ export const DashboardNavbar = () => {
   const logoutHandler = async () => {
     try {
       setIsLoading(true);
-      const logoutUrl = "http://localhost:8000/users/logout";
-      const response = await fetch(logoutUrl, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      await userLogout();
+      toast({
+        title: "Logged out successfully",
+        description: "You have been logged out",
+        variant: "default",
       });
-
-      if (response.ok) {
-        console.log("Logged out successfully");
-        toast({
-          title: "Logged out successfully",
-          description: "You have been logged out",
-          variant: "default",
-        });
-
-        router.replace("/dashboard/login");
-      } else {
-        throw new Error("Failed to logout");
-      }
+      router.replace("/login");
     } catch (error) {
       console.error(error);
+      const errorMessage = (error as Error).message || "Failed to logout";
       toast({
         title: "Logout Error",
-        description: `${error}`,
+        description: `${errorMessage}`,
         variant: "destructive",
       });
     } finally {
@@ -50,13 +38,13 @@ export const DashboardNavbar = () => {
       {" "}
       <div>
         <Button variant={"ghost"} className="text-lg px-4 capitalize">
-          <Link href={"/dashboard"}>My Profile</Link>
+          <Link href={"/control-panel"}>My Profile</Link>
         </Button>
         <Button variant={"ghost"} className="text-lg px-4">
-          <Link href={"/dashboard/jobs"}>Jobs</Link>
+          <Link href={"/control-panel/jobs"}>Jobs</Link>
         </Button>
         <Button variant={"ghost"} className="text-lg px-4">
-          <Link href={"/dashboard/users"}>Users</Link>
+          <Link href={"/control-panel/users"}>Users</Link>
         </Button>
       </div>
       <div>

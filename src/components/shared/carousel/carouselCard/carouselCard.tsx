@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { JobCard } from "@/components/JobCard";
 import { useEffect, useState } from "react";
-import { getJobList } from "@/helpers/userHttpHelper";
 import { Job } from "@/interfaces/Job";
+import { getJobList } from "@/helpers/userHttpHelper";
 
 function CarouselCard({
   className,
@@ -11,19 +11,20 @@ function CarouselCard({
   className?: string;
   companyName: string;
 }) {
-  const [openings, setOpenings] = useState<Array<Job>>([]);
+  const [companyJobs, setCompanyJobs] = useState<Array<Job>>([]);
   useEffect(() => {
-    const fetchOpenings = async () => {
+    const fetchOpenings = async (page: number, limit: number) => {
       try {
-        const { jobList } = await getJobList(`company=${companyName}`);
-        setOpenings(jobList);
+        const { jobList } = await getJobList(
+          `company=${companyName}&page=${1}&limit=${limit}`
+        );
+        setCompanyJobs(jobList);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchOpenings();
+    fetchOpenings(1, 5);
   }, [companyName]);
-
   return (
     <div
       className={cn(
@@ -62,8 +63,8 @@ function CarouselCard({
         </h1>
       </div>
       <div className="relative flex flex-col w-full justify-evenly h-full gap-2 overflow-y-scroll p-3 mb-2">
-        {openings.map((opening, idx) => {
-          return <JobCard isCraousalJob={true} key={idx} job={opening} />;
+        {companyJobs.map((job, idx) => {
+          return <JobCard isCraousalJob={true} key={idx} job={job} />;
         })}
       </div>
     </div>
